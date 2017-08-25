@@ -17,7 +17,7 @@ f = open(filename, "w")
 
 headers ="brand,product_name, shipping, price_real\n"
 
-# f.write(headers)
+# f.write(headers) mmm
 
 for container in containers:
 	detail_container = container.div.div 
