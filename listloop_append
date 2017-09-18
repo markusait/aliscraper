@@ -1,0 +1,27 @@
+import bs4
+from urllib.request import urlopen as Ureq
+from bs4 import BeautifulSoup as soup
+
+my_url = "https://de.aliexpress.com/category/2118/printers.html?spm=2114.30011908.2.111.JJr1uH"
+
+uClient = Ureq(my_url)
+page_html = uClient.read()
+uClient.close()
+
+
+page_soup = soup(page_html, "html.parser")
+#grabs each product
+filename = "aliscrape_test111.csv"
+f = open(filename, "w")
+
+
+alidata=[]
+ullist = page_soup.findAll("div", {"class":"col-main"})
+for ultag in ullist:
+	for litag in ultag.find_all('li'):
+		alidata.append(litag.text)
+
+
+f.write(str(alidata))
+
+f.close()
