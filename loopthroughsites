@@ -5,12 +5,12 @@ from bs4 import BeautifulSoup as soup
 
 my_url = []
 
-for x in range(1000):
+for x in range(10):
 	my_url.append("https://de.aliexpress.com/category/2118/printers/" + str(x) + "html?site=deu&tag=")
 
 
 
-for y in range(1000):
+for y in range(10):
 	uClient = Ureq(my_url[y])
 	page_html = uClient.read()
 	uClient.close()
