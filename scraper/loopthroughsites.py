@@ -24,7 +24,7 @@ for y in range(10):
 
 	#headers ="brand,product_name, shipping, price_real\n"
 
-	# f.write(headers) 
+	# f.write(headers)
 	ullist = page_soup.findAll("div", {"class":"col-main"})
 	error_p = page_soup.findAll("p", {"class":"ui-notice ui-notice-normal ui-notice-prompt"})
 	error = []
