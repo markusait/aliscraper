@@ -1,0 +1,36 @@
+import scrapy
+
+url0 = "http://thirdparty.aliexpress.com/login.htm?type=gg&tracelog=ws_gg_mainlogin"
+
+protocol_prefix = 'https:'
+
+class MultipleQuotesSpider(scrapy.Spider):
+    name = "aliscrape"
+    start_urls = ['https://de.aliexpress.com/category/5090301/mobile-phones/4.html?site=deu&g=y&needQuery=n&tag=']
+
+    def parse(self, response):
+        self.log('I just visited: ' + response.url)
+        loginpage = response.xpath('//h3[@class="banner-title"]/text()').extract_first() 
+       	if  loginpage == 'Smarter Shopping':
+        	print("HEIL DEM FÜHRER0")
+        	#yield scrapy.Request(url0, self.parse)
+        	# Insert the javascript part here
+        else:
+	        for x in range(1):
+	            item = {
+	                'product_name':response.xpath('.//h3[@class="icon-hotproduct"]/a/text()').extract_first(),
+	                'prices':response.xpath('.//span[@class="value"]/text()').extract_first(),
+	                'qr-data': response.xpath('.//li[contains(@qrdata, "")]/@qrdata').extract_first(),
+	            }
+	            yield(item)
+	        	
+
+	        # follow pagination link
+	       	next_page = response.xpath('//a[@class="page-next ui-pagination-next"]/@href')
+	        if next_page:
+	            url = protocol_prefix + next_page.extract_first()
+	            yield scrapy.Request(url, self.parse)
+	        elif loginpage == 'Smarter Shopping':
+	        	print("HEIL DEM FÜHRER01")
+	        else:
+	        	print("HEIL DEM FÜHRER02") 
